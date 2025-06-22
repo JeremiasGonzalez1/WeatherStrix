@@ -8,6 +8,7 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.parameters
 
 import io.ktor.utils.io.errors.IOException
 import javax.inject.Inject
@@ -19,7 +20,11 @@ class BaseClient @Inject constructor(private val httpClient : HttpClient){
             val result = httpClient.get(BaseUrl.BASE_URL + "weather") {
                 parameter("lat", lat)
                 parameter("lon", lon)
-                parameter("appid", "581d9978b7476c4c7d268a7cad184fec")}
+                parameter("appid", "581d9978b7476c4c7d268a7cad184fec")
+                parameter("lang", "sp")
+                parameter("units", "metric")
+
+            }
             if (result.status.value in 200.. 299){
                 HttpStatus(httpResponse =  result)
             }else{

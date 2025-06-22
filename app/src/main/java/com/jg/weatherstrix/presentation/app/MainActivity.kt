@@ -1,6 +1,6 @@
-package com.jg.weatherstrix.presentation
+package com.jg.weatherstrix.presentation.app
 
-import Navigation
+import WeatherNavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WeatherstrixTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Navigation()
+                    WeatherNavigation()
                 }
             }
         }

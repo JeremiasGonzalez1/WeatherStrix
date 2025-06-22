@@ -2,7 +2,8 @@ data class Weather(
     val conditions: List<Conditions>,
     val country:String,
     val city:String,
-    val coord:Coord
+    val coord:Coord,
+    val temperature: Temperature
 )
 
 data class Conditions(
@@ -13,4 +14,11 @@ data class Conditions(
 data class  Coord(
     val lat: Double,
     val lon: Double
+)
+
+data class Temperature(
+    val current: Double,
+    val max: Double,
+    val min: Double,
+    val feelsLike: Double
 )

@@ -1,4 +1,4 @@
-package com.jg.weatherstrix.presentation
+package com.jg.weatherstrix.presentation.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

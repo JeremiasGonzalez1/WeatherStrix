@@ -12,7 +12,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".presentation.WeatherApp"
+        android:name=".presentation.app.WeatherApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weatherstrix"
@@ -21,7 +21,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/API_KEY_GOOGLE"/>
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.app.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Weatherstrix">
