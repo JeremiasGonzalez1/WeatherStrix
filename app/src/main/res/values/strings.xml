@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">weatherstrix</string>
+    <string name="API_KEY_GOOGLE" translatable="false">AIzaSyAlWRwLQaeUUyWm-HdLFnpSLmpKROQSf1Y</string>
+</resources>
