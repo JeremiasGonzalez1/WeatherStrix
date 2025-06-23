@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +32,9 @@ import androidx.compose.ui.unit.dp
 fun WeatherInfoPanel(
     weather: Weather,
     modifier: Modifier = Modifier,
-    actions: @Composable (() -> Unit)? = null
+    onClose: () -> Unit,
+    onFavorite: () -> Unit,
+    isFavorite: Boolean = false
 ) {
     Card(
         modifier = modifier,
@@ -44,15 +49,26 @@ fun WeatherInfoPanel(
                 .padding(20.dp)
                 .fillMaxWidth()
         ) {
-            actions?.let {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    it()
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onClose) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        contentDescription = "Minimizar panel"
+                    )
                 }
-                Spacer(Modifier.height(8.dp))
+                IconButton(onClick = onFavorite) {
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = "Guardar favorito",
+                        tint = if (isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
+            Spacer(Modifier.height(8.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()

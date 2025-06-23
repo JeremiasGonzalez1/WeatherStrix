@@ -16,6 +16,5 @@ fun WeatherNavigation(modifier: Modifier = Modifier) {
     }
 }
 
-
 @Serializable
 object Map

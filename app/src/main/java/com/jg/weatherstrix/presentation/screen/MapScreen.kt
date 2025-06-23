@@ -32,17 +32,24 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
     ) { isGranted ->
         if (isGranted) {
             viewModel.fetchUserLocation(context, fusedLocationClient)
+            viewModel.showInfoPanel()
         } else {
             Timber.e("Location permission was denied by the user.")
             viewModel.setPermissionDenied()
         }
     }
+    val favorites: List<Weather> = when (favoritesState) {
+        is MapUIState.SuccessList -> (favoritesState as MapUIState.SuccessList).weathers
+        else -> emptyList()
+    }
+
 
     LaunchedEffect(Unit) {
         viewModel.getFavoritesLocations()
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
                 viewModel.fetchUserLocation(context, fusedLocationClient)
+                viewModel.showInfoPanel()
             }
             else -> {
                 permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -50,10 +57,6 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
         }
     }
 
-    val favorites: List<Weather> = when (favoritesState) {
-        is MapUIState.SuccessList -> (favoritesState as MapUIState.SuccessList).weathers
-        else -> emptyList()
-    }
 
     WeatherContentMap(
         weatherState = weatherState,

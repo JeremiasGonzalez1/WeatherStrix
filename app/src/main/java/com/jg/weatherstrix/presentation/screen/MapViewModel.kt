@@ -59,6 +59,14 @@ class MapViewModel @Inject constructor(
     private val _isInfoPanelVisible = MutableStateFlow(false)
     val isInfoPanelVisible: StateFlow<Boolean> = _isInfoPanelVisible.asStateFlow()
 
+    fun showFavorites() { _isFavoritesVisible.value = true }
+
+    fun hideFavorites() { _isFavoritesVisible.value = false }
+
+    fun showInfoPanel() { _isInfoPanelVisible.value = true }
+
+    fun hideInfoPanel() { _isInfoPanelVisible.value = false }
+
     private fun setUserLocation(latLng: LatLng, context: Context) {
         userLocation = latLng
         setActiveLocation(latLng, context)
@@ -105,6 +113,7 @@ class MapViewModel @Inject constructor(
             val lat = "%.4f".format(latLng.latitude)
             val lon = "%.4f".format(latLng.longitude)
             _weatherState.value = MapUIState.Error("Sin conexión a internet.\nUbicación: $lat, $lon")
+            getFavoritesLocations()
             return
         }
 
@@ -123,7 +132,9 @@ class MapViewModel @Inject constructor(
 
     fun setPermissionDenied() {
         _weatherState.value = MapUIState.PermissionDenied
+        _isInfoPanelVisible.value = true
     }
+
 
     fun fetchUserLocation(context: Context, fusedLocationClient: FusedLocationProviderClient) {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -139,11 +150,11 @@ class MapViewModel @Inject constructor(
                     _weatherState.value = MapUIState.Error("Error al obtener ubicación: ${exception.message}")
                 }
             } catch (e: SecurityException) {
-                Timber.e("Permission for location access was revoked: ${e.localizedMessage}")
+                Timber.e("Permisos para la ubicacion fueron revocados: ${e.localizedMessage}")
                 _weatherState.value = MapUIState.PermissionDenied
             }
         } else {
-            Timber.e("Location permission is not granted.")
+            Timber.e("Permisos de ubicacion con condedidos.")
             _weatherState.value = MapUIState.PermissionDenied
         }
     }
@@ -166,14 +177,8 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun showFavorites() { _isFavoritesVisible.value = true }
-    fun hideFavorites() { _isFavoritesVisible.value = false }
-
     fun selectFavorite(weather: Weather, context: Context) {
         setActiveLocation(LatLng(weather.coord.lat, weather.coord.lon), context)
         hideFavorites()
     }
-
-    fun showInfoPanel() { _isInfoPanelVisible.value = true }
-    fun hideInfoPanel() { _isInfoPanelVisible.value = false }
 }

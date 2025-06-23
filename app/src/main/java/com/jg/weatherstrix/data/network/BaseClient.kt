@@ -1,5 +1,6 @@
 package com.jg.weatherstrix.data.network
 
+import com.jg.weatherstrix.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpRequestTimeoutException
@@ -15,12 +16,13 @@ import javax.inject.Inject
 class BaseClient @Inject constructor(private val httpClient : HttpClient){
 
     suspend fun localWeather(lat:Double, lon:Double): HttpStatus {
+        val mapsKey = BuildConfig.WEATHER_API_KEY
 
         return try {
             val result = httpClient.get(BaseUrl.BASE_URL + "weather") {
                 parameter("lat", lat)
                 parameter("lon", lon)
-                parameter("appid", "581d9978b7476c4c7d268a7cad184fec")
+                parameter("appid", mapsKey)
                 parameter("lang", "sp")
                 parameter("units", "metric")
 
