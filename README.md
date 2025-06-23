@@ -22,8 +22,7 @@ Weatherstrix es una aplicación nativa para Android desarrollada en Kotlin utili
 - Acceso rápido a favoritos desde el botón flotante.
 - Persistencia local de favoritos para acceso offline.
 
-```markdown
 ![Mapa con clima](screenshots/map.png)
 ![Favoritos](screenshots/fav.png)
 ![Modal](screenshots/modal.png)
-```
+
