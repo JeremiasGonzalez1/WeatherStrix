@@ -2,7 +2,6 @@ package com.jg.weatherstrix.presentation.screen
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,7 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.jg.weatherstrix.presentation.components.WeatherMapScreen
+import com.jg.weatherstrix.domain.models.Weather
+import com.jg.weatherstrix.presentation.components.WeatherContentMap
 import timber.log.Timber
 
 @Composable
@@ -25,6 +25,8 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
     val activeLocation by viewModel.activeLocation.collectAsState()
     val weatherState by viewModel.weatherState.collectAsState()
     val favoritesState by viewModel.favoritesWeather.collectAsState()
+    val isFavoritesVisible by viewModel.isFavoritesVisible.collectAsState()
+    val isInfoPanelVisible by viewModel.isInfoPanelVisible.collectAsState()
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -36,11 +38,8 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
         }
     }
 
-    LaunchedEffect(Unit){
-        viewModel.getFavoritesLocations()
-    }
-
     LaunchedEffect(Unit) {
+        viewModel.getFavoritesLocations()
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
                 viewModel.fetchUserLocation(context, fusedLocationClient)
@@ -51,12 +50,12 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
         }
     }
 
-    val favorites: List<com.jg.weatherstrix.domain.models.Weather> = when (favoritesState) {
+    val favorites: List<Weather> = when (favoritesState) {
         is MapUIState.SuccessList -> (favoritesState as MapUIState.SuccessList).weathers
         else -> emptyList()
     }
 
-    WeatherMapScreen(
+    WeatherContentMap(
         weatherState = weatherState,
         activeLocation = activeLocation,
         cameraPositionState = cameraPositionState,
@@ -65,15 +64,14 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
         onRequestPermission = { permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION) },
         saveLocation = { viewModel.saveLocation() },
         favorites = favorites,
-        onSelectFavorite = { weather ->
-            viewModel.setActiveLocation(
-                com.google.android.gms.maps.model.LatLng(weather.coord.lat, weather.coord.lon),
-                context
-            )
-        },
-        onDeleteFavorite = { weather ->
-            viewModel.deleteFavoriteLocation(weather)
-        }
+        isFavoritesVisible = isFavoritesVisible,
+        onShowFavorites = { viewModel.showFavorites() },
+        onHideFavorites = { viewModel.hideFavorites() },
+        isInfoPanelVisible = isInfoPanelVisible,
+        onShowInfoPanel = { viewModel.showInfoPanel() },
+        onHideInfoPanel = { viewModel.hideInfoPanel() },
+        onSelectFavorite = { weather -> viewModel.selectFavorite(weather, context) },
+        onDeleteFavorite = { weather -> viewModel.deleteFavoriteLocation(weather) }
     )
 }
 

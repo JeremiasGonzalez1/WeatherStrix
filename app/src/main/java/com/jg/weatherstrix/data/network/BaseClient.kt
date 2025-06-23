@@ -1,4 +1,4 @@
-package com.jg.weatherstrix.data.utils
+package com.jg.weatherstrix.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
@@ -8,14 +8,14 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
-import io.ktor.http.parameters
 
 import io.ktor.utils.io.errors.IOException
 import javax.inject.Inject
 
 class BaseClient @Inject constructor(private val httpClient : HttpClient){
 
-    suspend fun localWeather(lat:Double, lon:Double):HttpStatus{
+    suspend fun localWeather(lat:Double, lon:Double): HttpStatus {
+
         return try {
             val result = httpClient.get(BaseUrl.BASE_URL + "weather") {
                 parameter("lat", lat)

@@ -9,7 +9,7 @@ import com.jg.weatherstrix.data.interfaces.WeatherDataSourceLocal
 import com.jg.weatherstrix.data.interfaces.WeatherDataSourceRemote
 import com.jg.weatherstrix.data.repository.StorageRepositoryImpl
 import com.jg.weatherstrix.data.repository.WeatherRepositoryImpl
-import com.jg.weatherstrix.data.utils.BaseClient
+import com.jg.weatherstrix.data.network.BaseClient
 import com.jg.weatherstrix.domain.interfaces.DeleteFavoriteRepositoryStorage
 import com.jg.weatherstrix.domain.interfaces.GetFavoriteRepositoryStorage
 import com.jg.weatherstrix.domain.interfaces.SetFavoriteRepositoryStorage

@@ -3,7 +3,7 @@ package com.jg.weatherstrix.data.datasource
 import com.jg.weatherstrix.domain.models.StatusResult
 import com.jg.weatherstrix.data.interfaces.WeatherDataSourceRemote
 import com.jg.weatherstrix.data.models.WeatherDetailDTO
-import com.jg.weatherstrix.data.utils.BaseClient
+import com.jg.weatherstrix.data.network.BaseClient
 import io.ktor.client.call.body
 import javax.inject.Inject
 

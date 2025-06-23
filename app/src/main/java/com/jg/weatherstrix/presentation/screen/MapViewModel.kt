@@ -53,6 +53,12 @@ class MapViewModel @Inject constructor(
 
     private var userLocation: LatLng? = null
 
+    private val _isFavoritesVisible = MutableStateFlow(false)
+    val isFavoritesVisible: StateFlow<Boolean> = _isFavoritesVisible.asStateFlow()
+
+    private val _isInfoPanelVisible = MutableStateFlow(false)
+    val isInfoPanelVisible: StateFlow<Boolean> = _isInfoPanelVisible.asStateFlow()
+
     private fun setUserLocation(latLng: LatLng, context: Context) {
         userLocation = latLng
         setActiveLocation(latLng, context)
@@ -159,4 +165,15 @@ class MapViewModel @Inject constructor(
             return networkInfo.isConnected
         }
     }
+
+    fun showFavorites() { _isFavoritesVisible.value = true }
+    fun hideFavorites() { _isFavoritesVisible.value = false }
+
+    fun selectFavorite(weather: Weather, context: Context) {
+        setActiveLocation(LatLng(weather.coord.lat, weather.coord.lon), context)
+        hideFavorites()
+    }
+
+    fun showInfoPanel() { _isInfoPanelVisible.value = true }
+    fun hideInfoPanel() { _isInfoPanelVisible.value = false }
 }
