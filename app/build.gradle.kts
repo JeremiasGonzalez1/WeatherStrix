@@ -3,8 +3,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
-    kotlin("kapt")
     alias(libs.plugins.hilt.di)
+    alias(libs.plugins.com.google.devtools.ksp)
+
 }
 
 android {
@@ -45,7 +46,7 @@ android {
 dependencies {
     implementation(libs.play.services.location)
     implementation(libs.timber)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,6 +64,9 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.room)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

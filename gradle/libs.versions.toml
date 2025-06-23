@@ -14,10 +14,11 @@ mapServices = "19.2.0"
 ktorClient = "2.3.12"
 hilt-compiler = "2.48.1"
 hilt-navigation-version = "1.1.0"
-playServicesLocation = "21.3.0"
-playServicesMaps = "19.0.0"
 playServicesLocationVersion = "21.3.0"
 timber = "5.0.1"
+androidx-room = "2.6.0"
+com-google-devtools-ksp = "2.0.21-1.0.27"
+
 
 
 [libraries]
@@ -36,17 +37,24 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 navigation-compose = {module ="androidx.navigation:navigation-compose", version.ref = "composeNavigation"}
-map-compose = {module = "com.google.maps.android:maps-compose", version.ref = "map"}
-map-play-service = {module = "com.google.android.gms:play-services-maps", version.ref="mapServices"}
+
+
 ktor-client = {module ="io.ktor:ktor-client-core", version.ref = "ktorClient"}
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClient" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
 ktor-client-cio = {module = "io.ktor:ktor-client-cio", version.ref = "ktorClient"}
+
 hilt-android = {group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-compiler"}
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-compiler" }
 hilt-navigation-compose = {group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-version"}
+
+map-compose = {module = "com.google.maps.android:maps-compose", version.ref = "map"}
+map-play-service = {module = "com.google.android.gms:play-services-maps", version.ref="mapServices"}
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocationVersion" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+androidx-room = {group = "androidx.room", name = "room-ktx", version.ref = "androidx-room"}
+androidx-room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "androidx-room"}
 
 
 
@@ -56,4 +64,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt-di = {id = "com.google.dagger.hilt.android", version.ref = "hilt-compiler"}
+com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp"}
 

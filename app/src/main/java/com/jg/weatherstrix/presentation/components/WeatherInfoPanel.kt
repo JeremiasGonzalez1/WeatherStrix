@@ -1,6 +1,6 @@
 package com.jg.weatherstrix.presentation.components
 
-import Weather
+import com.jg.weatherstrix.domain.models.Weather
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,7 +44,6 @@ fun WeatherInfoPanel(
                 .padding(20.dp)
                 .fillMaxWidth()
         ) {
-            // Acciones (solo si se pasan)
             actions?.let {
                 Row(
                     Modifier.fillMaxWidth(),
@@ -54,7 +53,6 @@ fun WeatherInfoPanel(
                 }
                 Spacer(Modifier.height(8.dp))
             }
-            // Ubicación
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -76,7 +74,6 @@ fun WeatherInfoPanel(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Temperatura actual
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -96,7 +93,6 @@ fun WeatherInfoPanel(
                 )
             }
 
-            // Sensación térmica
             Text(
                 text = "Sensación: ${weather.temperature.feelsLike.toInt()}°C",
                 style = MaterialTheme.typography.bodyMedium,
@@ -105,7 +101,6 @@ fun WeatherInfoPanel(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Temperaturas máxima y mínima
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -124,7 +119,6 @@ fun WeatherInfoPanel(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Condiciones del clima
             weather.conditions.firstOrNull()?.let { condition ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),

@@ -10,7 +10,7 @@ data class WeatherDetailDTO(
     val cod: Int? = null,
     val coord: Coord,
     val dt: Int? = null,
-    val id: Int? = null,
+    val id: Int,
     val main: Main,
     val name: String,
     val sys: Sys? = null,

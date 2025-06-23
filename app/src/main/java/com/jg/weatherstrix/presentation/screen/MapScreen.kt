@@ -2,6 +2,7 @@ package com.jg.weatherstrix.presentation.screen
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,7 +24,7 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
     val activeLocation by viewModel.activeLocation.collectAsState()
     val weatherState by viewModel.weatherState.collectAsState()
-
+    val favoritesState by viewModel.favoritesWeather.collectAsState()
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -33,6 +34,10 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
             Timber.e("Location permission was denied by the user.")
             viewModel.setPermissionDenied()
         }
+    }
+
+    LaunchedEffect(Unit){
+        viewModel.getFavoritesLocations()
     }
 
     LaunchedEffect(Unit) {
@@ -46,13 +51,29 @@ fun MapScreen(viewModel: MapViewModel = hiltViewModel<MapViewModel>()) {
         }
     }
 
+    val favorites: List<com.jg.weatherstrix.domain.models.Weather> = when (favoritesState) {
+        is MapUIState.SuccessList -> (favoritesState as MapUIState.SuccessList).weathers
+        else -> emptyList()
+    }
+
     WeatherMapScreen(
         weatherState = weatherState,
         activeLocation = activeLocation,
         cameraPositionState = cameraPositionState,
-        onMapClick = { latLng -> viewModel.setActiveLocation(latLng) },
-        onBackToUserLocation = { viewModel.backToUserLocation() },
-        onRequestPermission = { permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION) }
+        onMapClick = { latLng -> viewModel.setActiveLocation(latLng, context) },
+        onBackToUserLocation = { viewModel.backToUserLocation(context) },
+        onRequestPermission = { permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION) },
+        saveLocation = { viewModel.saveLocation() },
+        favorites = favorites,
+        onSelectFavorite = { weather ->
+            viewModel.setActiveLocation(
+                com.google.android.gms.maps.model.LatLng(weather.coord.lat, weather.coord.lon),
+                context
+            )
+        },
+        onDeleteFavorite = { weather ->
+            viewModel.deleteFavoriteLocation(weather)
+        }
     )
 }
 
