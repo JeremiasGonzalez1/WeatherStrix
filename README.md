@@ -2,6 +2,9 @@
 
 Weatherstrix es una aplicación nativa para Android desarrollada en Kotlin utilizando Jetpack Compose. Permite consultar el clima actual de tu ubicación y de cualquier punto seleccionado en el mapa, integrando Google Maps y una API de pronóstico del clima. Además, puedes guardar ubicaciones favoritas para acceder rápidamente a su información meteorológica.
 
+ ## Configuraciones claves necesarias:**
+- Agrega tu clave de API de Google Maps en el archivo `local.properties` o en el `AndroidManifest.xml`.
+
 ## Arquitectura
 ![Arquitectura](screenshots/Architecture.png)]
 
